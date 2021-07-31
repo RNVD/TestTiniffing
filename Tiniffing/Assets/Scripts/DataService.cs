@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO; //file 입출력
 using System; // Type
-
 using SqlCipher4Unity3D; // SQLiteConnection을 쓰기위함
 using System.Linq; // ToList사용
 using System.Reflection;// MethodInfo
@@ -25,8 +24,8 @@ public class DataService
         }
     }
     private SQLiteConnection connection;
-    public string databaseName = "MiniDB.db";//두번쨰복사  얘로 실제 작업
-    public string pureDatabaseName = "PureMiniDB.db";//첫번째 복사 스트리밍에셋 복사
+    public string databaseName = "TiniffingDB.db";//두번쨰복사  얘로 실제 작업
+    public string pureDatabaseName = "PureTiniffingDB.db";//첫번째 복사 스트리밍에셋 복사
 
     private Dictionary<Type, Dictionary<int, IKeyTableData>> tableDic;
     // Type은 tabletype  뒤에 dic은 데이터를 찾아감 
@@ -44,7 +43,7 @@ public class DataService
     {
         if (connection == null) // 일단 비번치고 들어감
         {
-            connection = new SQLiteConnection(databaseName, "1234", true); // connection이 안되어있으면  만들어주는데  경로와 비밀번호(스트링으로) 필요
+            connection = new SQLiteConnection(databaseName, "", true); // connection이 안되어있으면  만들어주는데  경로와 비밀번호(스트링으로) 필요
             // 마지막은 Tick으로 할건지유무
         }
 
@@ -197,6 +196,18 @@ public class DataService
         connection.DeleteAll(tableList);
     }
 
+    public string GetText(int textId)
+    {
+        switch (Application.systemLanguage)
+        {
+            case SystemLanguage.Korean:
+                return GetData<Table.TextTable>(textId).kor;
+
+            default: 
+                return GetData<Table.TextTable>(textId).eng;
+
+        }
+    }
 
     public void InitDB()
     {

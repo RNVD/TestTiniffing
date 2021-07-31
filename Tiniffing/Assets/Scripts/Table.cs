@@ -10,31 +10,68 @@ public class Table
     public static Type[] readOnlyTableTypeArray =
     {
 
-
+        typeof(TextTable),
     };
 
     public static Type[] writableTableTypeArray =
     {
-
-       typeof(PlayerIngameShopSkillLevelTable)
+        typeof(LobbyTable),typeof(SaveTable),
     };
 
     #region ReadOnly Table
 
-   
-    #endregion
-
-    #region Writable Table
-   
 
     [Preserve, Serializable] //serializable : 매칭이 되는 테이블과 연결을 하기 위한 어트리뷰트
-    public class PlayerIngameShopSkillLevelTable : IKeyTableData //extra table
+    public class TextTable : IKeyTableData
     {
         public int GetTableId() { return id; }
         [NotNull, PrimaryKey, Unique]
         public int id { get; set; }
-        public int level { get; set; }
+        public string kor { get; set; }
+        public string eng { get; set; }
+
 
     }
+
+    #endregion
+
+    #region Writable Table
+    [Preserve, Serializable] //serializable : 概莫捞 登绰 抛捞喉苞 楷搬阑 窍扁 困茄 绢飘府轰飘
+    public class SaveTable : IKeyTableData
+    {
+        public int GetTableId() { return id; }
+        [NotNull, PrimaryKey, Unique]
+        public int id { get; set; }
+        public int chapter_no { get; set; }
+
+        public int stage_no { get; set; }
+
+        public string last_time { get; set; }
+
+        public int heart_count { get; set; }
+
+        public int cumulative_cycle_time { get; set; }
+
+        public string in_game_start_time { get; set; }
+    }
+
+
+    [Preserve, Serializable] //serializable : 매칭이 되는 테이블과 연결을 하기 위한 어트리뷰트
+    public class LobbyTable : IKeyTableData
+    {
+        public int GetTableId() { return id; }
+        [NotNull, PrimaryKey, Unique]
+        public int id { get; set; }
+        public int chapter_no { get; set; }
+
+        public int stage_no { get; set; }
+
+        public int clear { get; set; }
+        public int star_count { get; set; }
+        public int mode_type { get; set; } // 老馆 窍靛 绰 咆胶飘抛捞喉肺 阂矾坷扁
+
+        public string box_image_name { get; set; }
+    }
+
     #endregion
 }
